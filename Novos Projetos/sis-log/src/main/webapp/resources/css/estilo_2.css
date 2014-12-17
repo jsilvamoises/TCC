@@ -1,0 +1,146 @@
+body{
+    background-color: beige;
+    font-size: 10px; 
+    margin: 0px;
+    font-family: Arial, Helvetica , sans-serif;
+    background-image: url("../images/background/1676581.jpg");
+}
+header{
+  //  padding: 5px 0px;
+}
+h1{
+    color: #999999;
+}
+#nome-empresa{
+    padding: 0px;
+    margin: 0px;
+    color: #ffffff;
+}
+#conteudo{
+    //padding-top: 10px;
+    background: #ffffff;
+   
+}
+#logo{
+    margin: 5px 5px;
+   height: 30px;
+   width: 75px;
+}
+#menu{
+    //background-color: dimgray;
+    //height: 8%;
+    border-radius: 5px;
+    //box-shadow: 5px 5px 5px #999999;
+}
+#plano-de-fundo{
+    position: absolute;
+}
+#rodape{
+    
+    width: 80%;
+    margin: 10px;
+    margin-top: 5px;
+    background: #ffffff;
+    box-shadow: 5px 5px 5px #999999;
+    border-radius: 8px;
+    margin: auto;
+    padding-top:  10px:
+    
+}
+
+.ajax-status{
+   position: fixed;
+   top: 55px;
+   right: 40px;
+   width: 35px;
+   height: 35px;
+}
+.campo{
+  background-color:  activeborder;
+}
+.coluna-id{
+    font-size: medium;
+    font-family: sans-serif;
+    color: #990033;
+    text-align: center;
+}
+
+.frm-medio{
+    width: 900px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px gray;
+    border: 1px solid activecaption;
+    
+}
+
+.formulario{
+   
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px gray;
+    border: 1px solid activecaption;
+}
+.grid{
+    padding-top: 10px;
+    background-color: silver;
+    border-radius: 8px;
+}
+.rotulo{
+    width: 150px;
+    text-align: right;
+    font-size: large;
+    background-color: darkgrey;
+}
+#cadastro-separador{
+    padding: 30px;
+    width: 900px;
+    margin: auto;
+    margin-bottom:  30px;
+}
+
+.cadastro{
+    
+    width: 900px;
+    margin: auto;
+    margin-top: 10px;
+}
+#frm-login{
+    width: 400px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px #990033;
+    border: 1px solid firebrick;
+}
+#div-login{
+    margin: auto;
+    margin-top: 300px;
+    width: 400px;
+}
+#topo-login{
+    padding:  0px;
+    margin: 0px;
+    background-color: #990000;
+    height: 30px;
+    color: #ffffff;
+    font-family: monospace;
+        
+}
+#usurio-logado{
+    margin-right: 200px;
+    text-align: right;
+    color: #990000;
+    font-size: 12px;
+}
+
+.consulta{
+   
+    padding: 20px;
+    width: 80%;
+    margin: auto;
+    margin-top: 10px;
+    
+}

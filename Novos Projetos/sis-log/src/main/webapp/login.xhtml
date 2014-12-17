@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Login</title>
+        <h:outputStylesheet library="css" name="estilo.css"/>
+    </h:head>
+    <h:body>
+        <div id="topo-login">
+            <h2 id="nome-empresa"> POLIMPORT COMÉRCIO E EXPORTAÇÃO LTDA #{data.data}</h2>
+        </div>
+        <div id="div-login">
+            <h1>Login</h1>
+            <h:form id="frm-login">
+                <p:messages id="msg-login" autoUpdate="true"/>
+                <p:growl id="grs-login" autoUpdate="true"/>
+                <p:panelGrid columns="2" columnClasses="rotulo, campo" style="width: 100%">
+                    <p:outputLabel value="Usuário" for="usuario"/>
+                    <p:inputText id="usuario" size="40" autocomplete="true" placeholder="Usuário" required="true" value="#{usuarioBean.usuario.login}" />
+                    
+                    <p:outputLabel value="Senha" for="senha" />
+                    <p:password id="senha" placeholder="Senha" required="true" value="#{usuarioBean.usuario.senha}"/>
+                </p:panelGrid>
+                
+                <h:panelGrid columns="2"  style="width: 100%; margin-top: 10px" >
+                    <p:commandButton value="Entrar" icon="ui-icon-check" style="color: darkgreen" iconPos="right" action="#{usuarioBean.validarLogin()}" update="msg-login grs-login "/>
+                    <p:button value="Resetar" icon="ui-icon-notice" style="color: crimson" iconPos="right"/>
+                </h:panelGrid>
+                
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

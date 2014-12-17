@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../WEB-INF/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="titulo">
+        Cadastro de Lojas
+    </ui:define>
+
+    <ui:define name="conteudo">
+
+        <div class="cadastro">
+            <img src="../../resources/images/icons/shopping-bag-icon-64.png"/>
+            <h1>Cadastro de Lojas</h1>
+    
+            <h:form class="frm-medio"> 
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:button value="Novo" outcome="/private/transportadora/CadastroTransportadora"/>
+                        <p:commandButton value="Salvar" id="botao-salvarS"/>
+                    </p:toolbarGroup>
+                    
+                    <p:toolbarGroup align="right">
+                        <p:button value="Pesquisa"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <p:panelGrid columns="2" styleClass="grid" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+                    
+                  
+                    <p:outputLabel value="Id" />
+                    <p:inputText id="codigo"/>
+                    
+                    <p:outputLabel value="Nome Logística" />
+                    <p:inputText id="nome-logistica" size="100"/>
+                    
+                    <p:outputLabel value="Nome Consolidado" />
+                    <p:inputText id="nome-consolidado" size="100"/>
+                    
+                    <p:outputLabel value="Nome Sip" />
+                    <p:inputText id="nome-sip" size="100"/>
+                    
+                    <p:outputLabel value="Apelido" />
+                    <p:inputText id="apelido" size="60"/>
+                    
+                    <p:outputLabel value="Estado" />
+                    <p:selectOneMenu id="estado">
+                        <f:selectItem itemLabel="Selecione o Estado"/>
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel value="Data Cadastro" />
+                    <p:calendar id="data-cadastro" pattern="dd/MM/yyyy"/>               
+                                       
+                    <p:outputLabel value="Status" />
+                    <p:selectOneMenu id="status">
+                        <f:selectItem itemLabel="Selecione o Status"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+            </h:form>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../WEB-INF/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="titulo">
+        Cadastro de Motoristas
+    </ui:define>
+
+    <ui:define name="conteudo">
+        <f:metadata>
+            <f:viewParam name="dummy"/>
+
+        </f:metadata>
+
+        <div id="cadastro">
+            <img src="../../resources/images/icons/Transport-Driver-icon-64.png"/>
+            <h1>Cadastro de Motoristas</h1>
+
+            <h:form class="frm-medio"> 
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:button value="Novo" />
+                        <p:commandButton value="Salvar" id="botao-salvarS" />
+                    </p:toolbarGroup>
+
+                    <p:toolbarGroup align="right">
+                        <p:button value="Pesquisa"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <p:panelGrid columns="1" styleClass="grid" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+                    <p:outputLabel value="Id" />
+                    <p:fileUpload fileUploadListener="#{fileUploadController.upload}" label="Procurar..." auto="true" multiple="true" />
+
+                    
+
+                </p:panelGrid>
+            </h:form>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

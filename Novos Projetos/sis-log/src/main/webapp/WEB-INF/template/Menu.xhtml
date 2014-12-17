@@ -1,0 +1,67 @@
+<ui:composition 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="ui-grid ui-grid-responsive" style="padding:0px; margin-top: 0px">
+        <div class="ui-grid-row" >
+
+            <div class="ui-grid-col-12" id="menu">
+                <h:form >  
+                   
+
+
+
+                    <p:menubar id="menu-bar" >
+                        <p:submenu label="Cadastro" icon="ui-icon-document">
+                            <p:menuitem value="Usuários" outcome="/private/usuario/CadastroUsuario"/>
+                            <p:menuitem value="Separadores" outcome="/private/separador/CadastroSeparador"/>
+                            <p:menuitem value="Motoristas" outcome="/private/motorista/CadastroMotorista"/>
+                            <p:separator/>
+                            <p:menuitem value="Lojas" outcome="/private/loja/CadastroLoja"/>
+                            <p:menuitem value="Transportadoras" outcome="/private/transportadora/CadastroTransportadora"/>
+                        </p:submenu>
+
+                        <p:submenu label="Operacional">
+                            <p:submenu label="Expedição">
+                                <p:menuitem value="Consulta Mapa"/>
+                                <p:menuitem value="Pesos e Medidas"/>
+                                <p:separator/>
+                                <p:menuitem value="Cronograma"/>
+                            </p:submenu>
+
+                            <p:submenu label="Estoque">
+                                <p:menuitem value="Iniciar Loja"/>
+                                <p:menuitem value="Finalizar Loja"/>
+                            </p:submenu>
+
+                        </p:submenu>
+                        
+                        <p:submenu label="Insumos">
+                            <p:submenu label="Expedição">
+                                <p:menuitem value="Cadastro"/>
+                            </p:submenu>
+                        </p:submenu>
+
+
+
+
+
+
+                        <f:facet name="options">
+                            <p:inputText style="margin-right:10px" placeholder="Search"/>
+                            <p:button value="Logout" icon="ui-icon-extlink" />
+                        </f:facet>
+                    </p:menubar>
+                    
+                    <p:sticky target="menu-bar"/>
+                </h:form>
+            </div>
+
+        </div>
+
+    </div>
+
+</ui:composition>

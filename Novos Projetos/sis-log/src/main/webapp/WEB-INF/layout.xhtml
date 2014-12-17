@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+     <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title><ui:insert name="titulo">Sistema de Gerenciamento Logístico</ui:insert></title>
+        <h:outputStylesheet library="css" name="estilo.css"/>
+    </h:head>
+
+    <h:body>
+        <!--ICONE DE CERREGAMENTO AJAX-->
+        <p:ajaxStatus styleClass="ajax-status">
+            <f:facet name="start">
+                <h:graphicImage library="images/gifanimado" name="loading.gif"/>
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value=""/>
+            </f:facet>
+
+        </p:ajaxStatus>
+        <!--FIM ICONE DE CERREGAMENTO AJAX-->
+
+        <header>            
+            <ui:include src="../WEB-INF/template/Menu.xhtml"/>
+                        <div id="usurio-logado">
+                            <p:outputLabel value="#{usuarioLogadoBean.usuario}" id="usuario2"/>
+                        </div>
+            
+        </header>
+
+        <content>
+           <ui:insert name="conteudo">
+                <ui:include src="../WEB-INF/template/rodape.xhtml"/>
+                
+            </ui:insert>
+
+        </content>
+
+        <footer>
+            <ui:insert name="rodape">
+                <ui:include src="../WEB-INF/template/rodape.xhtml"/>
+                
+            </ui:insert>
+
+        </footer>
+
+
+    </h:body>
+</html>
+
