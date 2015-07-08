@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1132.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controller.ControladorController">
+  <children>
+    <MenuBar fx:id="menuBar" blendMode="SRC_OVER" prefHeight="35.0" prefWidth="600.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Close" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Delete" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <ToolBar blendMode="SRC_OVER" cache="true" cacheHint="DEFAULT" mouseTransparent="true" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+      <items>
+        <Label maxWidth="-1.0" prefWidth="250.0" text="Desenvolvido por : jsilva.moises@gmail.com" textFill="#008799" />
+      </items>
+    </ToolBar>
+    <TableView prefHeight="379.0" prefWidth="1102.0" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+      <columns>
+        <TableColumn prefWidth="75.0" text="Column X" />
+        <TableColumn prefWidth="75.0" text="Column X" />
+      </columns>
+    </TableView>
+    <Pane layoutX="50.0" layoutY="54.0" prefHeight="200.0" prefWidth="782.0">
+      <children>
+        <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="CheckBox" />
+        <TextField id="5" layoutX="14.0" layoutY="40.0" prefWidth="200.0" />
+        <TextField layoutX="14.0" layoutY="68.0" prefWidth="200.0" />
+        <TextField layoutX="14.0" layoutY="100.0" prefWidth="200.0" />
+        <TextField layoutX="14.0" layoutY="129.0" prefWidth="200.0" />
+      </children>
+    </Pane>
+  </children>
+  <stylesheets>
+    <URL value="@../resources/css/estilos.css" />
+  </stylesheets>
+</AnchorPane>

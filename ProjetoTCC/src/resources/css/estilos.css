@@ -1,0 +1,16 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.tb-pressed{-fx-font: cursive;-fx-background-color: firebrick;}
+.tb-unpressed{-fx-background-color: lightseagreen;}
+.custom-btn{}
+.label-info{-fx-background-color: black;}
+.mainFxmlClass {-fx-background-color: lightseagreen;}
+#menuBar{width: 100%;}
+#AnchorPane{
+   // height: 100%;
+  //  width: 100%;
+}
+
+

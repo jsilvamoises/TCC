@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1005.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="br.com.moises.controller.PrincipalController">
+  <children>
+    <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <top>
+        <VBox prefHeight="85.0" prefWidth="462.0">
+          <children>
+            <MenuBar fx:id="MenuPrincipal">
+              <menus>
+                <Menu mnemonicParsing="false" text="Cadastro">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Operação">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Ambientes" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Info">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Projeto" />
+                  </items>
+                </Menu>
+              </menus>
+              <VBox.margin>
+                <Insets left="20.0" right="20.0" fx:id="x1" />
+              </VBox.margin>
+            </MenuBar>
+            <ToolBar prefHeight="87.0" prefWidth="462.0" VBox.margin="$x1">
+              <items>
+                <Button fx:id="btMonitorar" contentDisplay="TOP" mnemonicParsing="false" prefHeight="39.0" prefWidth="112.0" text="Monitorar" textFill="RED">
+                  <graphic>
+                    <ImageView depthTest="DISABLE" fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../../../../resources/images/Computer_Service_32.png" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </Button>
+                <Button id="btMonitorar" fx:id="btnSair" contentDisplay="TOP" mnemonicParsing="false" prefHeight="39.0" prefWidth="112.0" text="Fechar" textFill="RED">
+                  <graphic>
+                    <ImageView depthTest="DISABLE" fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../../../../resources/images/Exit%20Sign-32.png" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </Button>
+              </items>
+            </ToolBar>
+          </children>
+        </VBox>
+      </top>
+    </BorderPane>
+  </children>
+</AnchorPane>
