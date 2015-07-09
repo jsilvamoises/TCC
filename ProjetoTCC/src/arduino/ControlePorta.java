@@ -12,7 +12,6 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException; 
-import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TooManyListenersException;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javax.swing.JOptionPane;
 import util.ConverterJsonToObject;
 
@@ -161,11 +161,16 @@ public class ControlePorta implements SerialPortEventListener {
     }
 
     public void iniciarLeitura() throws TooManyListenersException, IOException {
-        System.out.println("Iniciado leitura da porta " + portaCom);
+        if(portaCom.isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Não foi possível detectar uma porta para se conectar", ButtonType.OK).show();
+        }else{
+            System.out.println("Iniciado leitura da porta " + portaCom);
 
         serialIn = port.getInputStream();
         port.addEventListener(this);
         port.notifyOnDataAvailable(true);
+        }
+        
 
 
 }
@@ -193,12 +198,8 @@ public class ControlePorta implements SerialPortEventListener {
                         st += linha;
 
                     }
-                    // System.out.println("Setando dados");
-                    //  d.setDados(linha);
-                    //  System.out.println("Criando objeto repositorio");
-                    //new Repository().salvar(d);
-                    // System.out.println(">>"+linha);
-                    System.out.println(linha);
+                    
+                    System.out.println(">>>  Últimos dados coletados :: "+linha);
                     ConverterJsonToObject.getInstance().transformToObject(linha);
                 } catch (IOException ex) {
                     // Logger.getLogger(GUJSerialPort.class.getName()).log(Level.SEVERE, null, ex);

@@ -29,7 +29,11 @@ public class UltimosDados {
         }
         return instance;
     }
-    
+    /**
+     * @param d
+     * Adiciona um dado a lista na posição um
+     * Remove o dado mais antido da lista [20º] posição
+     */
     public void add(Dado d){
         //Adiciona a ultima informação vinda da porta na lista na primeira posição
         dados.add(0, d);
@@ -42,13 +46,14 @@ public class UltimosDados {
         
         // virifica se o tamanho da lista e maior que vinte e remove o registro mais antigo
         if(dados.size()>=20){
-            System.out.println("Removendo "+dados.size());
+            System.out.println(">>> Removendo o objeto mais antigo da lista [20º]");
             dados.remove(20);
         }
         //Verifica se é para salvar os dados no banco
         if(true!=isSavingInDatabase){
         } else {
-            repository.salvar(d);
+           // repository.salvar(d);
+            new Thread(new salvarDado()).start();
         }
         
         
@@ -74,6 +79,17 @@ public class UltimosDados {
         return dado;
     }
     
+    /**
+     * Classe responsável por salvar o ultimo registro no banco
+     */
+    class salvarDado implements Runnable{
+
+        @Override
+        public void run() {
+            repository.salvar(dado);
+        }
+        
+    }
     
     
     

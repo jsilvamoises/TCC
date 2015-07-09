@@ -19,22 +19,27 @@ public class ConverterJsonToObject {
 
     private ConverterJsonToObject() {
     }
-
+    /**
+     * Cria apenas uma instancia da classe
+     * @return 
+     */
     public static ConverterJsonToObject getInstance() {
         return instance == null ? instance = new ConverterJsonToObject() : instance;
     }
-
+    /**
+     * Converte uma string json em um objeto Java
+     * @param valor
+     * @return 
+     */
     public Dado transformToObject(String valor) {
         Dado d = null;
-        System.err.println("Iniciado conversao");
+        System.out.println(">>>Convertendo ojeto json para ojeto Java");
         try {
             Gson gsom = new Gson();
             d = gsom.fromJson(valor, Dado.class);
-            d.setDataColeta(Calendar.getInstance().getTime());
-            //Deverá ser pego de uma avaliação do sistema por meio de IA
-            d.setIsNoPadrao(1);
-            UltimosDados.getInstance().add(d);
-            System.out.println("Dado de dentro do objeto"+d.getMagnetismo());
+            d.setDataColeta(Calendar.getInstance().getTime());         
+            
+            UltimosDados.getInstance().add(d);            
         } catch (Exception e) {
         }
 

@@ -5,18 +5,17 @@
  */
 package repository;
 
-
 import model.Dado;
 import org.hibernate.Session;
 import util.HibernateUtil;
-
 
 /**
  *
  * @author MOISES
  */
 public class Repository {
-    public void salvar(Dado d){
+
+    public void salvar(Dado d) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
         try {
@@ -24,10 +23,14 @@ public class Repository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
-        }finally{
-            if(session.getTransaction().isActive()){
-               
+        } finally {
+            try {
+                if (session.getTransaction().isActive()) {
+
+                }
+            } catch (Exception e) {
             }
+
         }
     }
 }

@@ -20,9 +20,21 @@ public class Arduino {
 
     private ControlePorta arduino;
 
-    public Arduino() {
+//    public Arduino() {
+//        arduino = ControlePorta.getInstance();
+//        arduino.setPort("COM5", 9600);
+//        //  arduino = new ControlePorta("COM5", 9600);
+//    }
+    
+    public Arduino(String porta) {
         arduino = ControlePorta.getInstance();
-        arduino.setPort("COM5", 9600);
+        arduino.setPort(porta, 9600);
+        //  arduino = new ControlePorta("COM5", 9600);
+    }
+    
+    public Arduino(String porta, int frequencia) {
+        arduino = ControlePorta.getInstance();
+        arduino.setPort(porta, frequencia);
         //  arduino = new ControlePorta("COM5", 9600);
     }
 
@@ -47,7 +59,12 @@ public class Arduino {
     }
 
     public void pararDeReceberDados() {
-        arduino.pararLeitura();
+        try {
+            arduino.pararLeitura();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
     }
 
     public void lerPorta() {
