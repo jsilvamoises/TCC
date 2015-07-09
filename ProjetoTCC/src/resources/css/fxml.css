@@ -8,6 +8,6 @@ and open the template in the editor.
     Author     : MOISES
 */
 
-.a{
-    
+.menu{
+    -fx-background-image: url(../images/banner/banner.jpg);
 }

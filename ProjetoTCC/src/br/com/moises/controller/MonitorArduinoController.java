@@ -39,6 +39,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javax.swing.JOptionPane;
 import model.Dado;
 import model.table.DadoTable;
 import util.PortasDisponiveis;
@@ -288,7 +289,8 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
     }
 
     private boolean lerPortasArduino() {
-
+        
+        
         List<String> choises = PortasDisponiveis.getInstance().getPortas();
         if (!choises.isEmpty()) {
             ChoiceDialog<String> dialog = new ChoiceDialog<>(choises.get(0), choises);
@@ -308,7 +310,7 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
             new Alert(Alert.AlertType.INFORMATION, "Não foi possível detectar uma dispositivo com comunição serial puglado a esse PC!!", ButtonType.OK).show();
             return false;
         }
-
+          
     }
 
     @Override
