@@ -27,27 +27,27 @@ void loop() {
   //GERA UMA STRING NO FORMATO JSON
   // if ((millis() % 1000) == 0) {
   if ((millis() - valorUltimaEscritaNaPorta) >= intervaloEscritaNaPorta) {
-
+    
    
-    /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+   /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       @     LÊ OS DADOS VINDOS DOS PINOS                @
     /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
     // Imprime dados da temperatura
     Serial.print("{temperatura: ");
     Serial.print(random(10, 50));
-    Serial.print(", ");
+    Serial.print(", ");     
     // imprime dados da umidade
     Serial.print("umidade: ");
     Serial.print(random(60, 100));
-    Serial.print(", ");
+    Serial.print(", ");    
     // imprime dados da luminosidade
     Serial.print("luminosidade: ");
     Serial.print(random(0, 100));
-    Serial.print(", ");
+    Serial.print(", ");     
     // imprime dados do magnetismo
     Serial.print("magnetismo: ");
     Serial.print(random(0, 100));
-    Serial.print(", ");
+    Serial.print(", ");     
     // imprime dados do id dos dispositivo
     Serial.print("identificador: ");
     Serial.print("AMB-01");
@@ -80,7 +80,8 @@ void loop() {
     Serial.print(statusGeral(a,b,c,d));
    // Serial.print(", ");
     Serial.println("} ");
-    valorUltimaEscritaNaPorta = millis();
+    Serial.println("*");
+    valorUltimaEscritaNaPorta = millis();    
     Serial.flush();
   }
 

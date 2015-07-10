@@ -11,3 +11,9 @@ and open the template in the editor.
 .menu{
     -fx-background-image: url(../images/banner/banner.jpg);
 }
+.automatico{
+    -fx-background-color: mediumaquamarine;
+}
+.manual{
+    -fx-background-color: white;
+}

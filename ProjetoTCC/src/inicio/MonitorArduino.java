@@ -44,7 +44,7 @@ public class MonitorArduino extends Application {
         
         stage.setScene(scene);
         stage.setTitle("Monitoramento de portas");
-        stage.setFullScreen(true);
+        //stage.setFullScreen(true);
         stage.setMaximized(true);
         stage.setHeight(d.height);
         stage.setWidth(d.width);

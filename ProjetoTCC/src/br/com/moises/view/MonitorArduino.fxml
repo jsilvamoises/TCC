@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import java.util.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
@@ -18,7 +19,7 @@
           <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="1980.0" style="-fx-background-color:black;&#10;-fx-opacity: 0.7;" text="ULTIMOS DADOS COLETADOS" textAlignment="CENTER" textFill="RED" textOverrun="CLIP">
               <font>
-                <Font name="Agency FB Bold" size="20.0" />
+                <Font name="Agency FB Bold" size="20.0" fx:id="x6" />
               </font>
               <VBox.margin>
                 <Insets />
@@ -69,7 +70,7 @@
       <left>
         <Pane fx:id="paneCommand" prefHeight="467.0" prefWidth="196.0">
           <children>
-            <ToggleButton fx:id="tbAquecedor" alignment="CENTER" contentDisplay="TOP" layoutX="6.0" layoutY="23.0" mnemonicParsing="true" prefHeight="67.94140625" prefWidth="186.0" style="" text="A_quecedor" textFill="WHITE">
+            <ToggleButton fx:id="tbAquecedor" alignment="CENTER" contentDisplay="TOP" layoutX="6.0" layoutY="6.0" mnemonicParsing="true" prefHeight="67.94140625" prefWidth="186.0" style="" text="A_quecedor" textFill="WHITE">
               <font>
                 <Font name="System Bold" size="14.0" fx:id="x5" />
               </font>
@@ -81,7 +82,7 @@
                 </ImageView>
               </graphic>
             </ToggleButton>
-            <ToggleButton fx:id="tbArcondicionado" contentDisplay="TOP" font="$x5" layoutX="6.0" layoutY="99.0" mnemonicParsing="false" prefHeight="67.94140625" prefWidth="186.0" text="Ar condicionado [F2]" textFill="WHITE">
+            <ToggleButton fx:id="tbArcondicionado" contentDisplay="TOP" font="$x5" layoutX="6.0" layoutY="82.0" mnemonicParsing="false" prefHeight="67.94140625" prefWidth="186.0" text="Ar condicionado [F2]" textFill="WHITE">
               <graphic>
                 <ImageView fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -90,7 +91,7 @@
                 </ImageView>
               </graphic>
             </ToggleButton>
-            <ToggleButton fx:id="tbAlarmeIncendio" contentDisplay="TOP" font="$x5" graphicTextGap="5.0" layoutX="6.0" layoutY="175.0" mnemonicParsing="false" prefHeight="68.94140625" prefWidth="186.0" text="Alarme Incendio [F3]" textFill="WHITE">
+            <ToggleButton fx:id="tbAlarmeIncendio" contentDisplay="TOP" font="$x5" graphicTextGap="5.0" layoutX="6.0" layoutY="158.0" mnemonicParsing="false" prefHeight="68.94140625" prefWidth="186.0" text="Alarme Incendio [F3]" textFill="WHITE">
               <graphic>
                 <ImageView fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -99,7 +100,7 @@
                 </ImageView>
               </graphic>
             </ToggleButton>
-            <ToggleButton fx:id="tbAlarmeMagnetismo" contentDisplay="TOP" font="$x5" layoutX="6.0" layoutY="253.0" mnemonicParsing="false" prefHeight="67.94140625" prefWidth="186.0" text="Alar. Magnetismo [F4]" textFill="WHITE">
+            <ToggleButton fx:id="tbAlarmeMagnetismo" contentDisplay="TOP" font="$x5" layoutX="6.0" layoutY="236.0" mnemonicParsing="false" prefHeight="67.94140625" prefWidth="186.0" text="Alar. Magnetismo [F4]" textFill="WHITE">
               <graphic>
                 <ImageView fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -108,7 +109,7 @@
                 </ImageView>
               </graphic>
             </ToggleButton>
-            <Label layoutX="10.0" layoutY="6.0" prefWidth="127.0" text="Label" />
+            <Label fx:id="lblInfo" alignment="CENTER" font="$x6" layoutX="8.0" layoutY="310.0" prefWidth="180.0" style="-fx-background-color:black;&#10;-fx-opacity:0.7;" text="MANUAL" textFill="WHITE" />
           </children>
         </Pane>
       </left>
@@ -195,7 +196,7 @@
                 </ImageView>
               </graphic>
             </Button>
-            <Button id="btnIniciarMonitoramento" fx:id="btnSalvarDatabase" contentDisplay="TOP" font="$x3" mnemonicParsing="false" style="-fx-background-color:white;" text="Salvar amostras" textFill="$x4" textOverrun="LEADING_ELLIPSIS" underline="false">
+            <Button id="btnIniciarMonitoramento" fx:id="btnSalvarDatabase" contentDisplay="TOP" font="$x3" maxWidth="169.0" minWidth="169.0" mnemonicParsing="false" style="-fx-background-color:white;" text="Salvar amostras" textFill="$x4" textOverrun="LEADING_ELLIPSIS" underline="false">
               <graphic>
                 <ImageView fitHeight="33.0" fitWidth="33.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -204,16 +205,20 @@
                 </ImageView>
               </graphic>
             </Button>
-            <Button id="btnIniciarMonitoramento" fx:id="btnNaoSalvarDatabase" contentDisplay="TOP" font="$x3" mnemonicParsing="false" style="-fx-background-color:white;" text="Não salvar amostras" textFill="$x4" textOverrun="LEADING_ELLIPSIS" underline="false">
+            <Button id="btnIniciarMonitoramento" fx:id="btProcessarAutomatico" contentDisplay="TOP" font="$x3" maxWidth="169.0" minWidth="169.0" mnemonicParsing="false" style="-fx-background-color:white;" text="MANUAL" textFill="$x4" textOverrun="LEADING_ELLIPSIS" underline="false">
               <graphic>
                 <ImageView fitHeight="33.0" fitWidth="33.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="@../../../../resources/images/Do%20Not%20Mix-32.png" />
+                    <Image url="@../../../../resources/images/Robot-32.png" />
                   </image>
                 </ImageView>
               </graphic>
             </Button>
           </items>
+          <stylesheets>
+            <URL value="@../../../../resources/css/estilos.css" />
+            <URL value="@../../../../resources/css/fxml.css" />
+          </stylesheets>
         </ToolBar>
       </top>
     </BorderPane>

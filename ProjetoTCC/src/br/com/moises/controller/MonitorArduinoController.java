@@ -6,12 +6,15 @@
 package br.com.moises.controller;
 
 import arduino.Arduino;
+import arduino.JavaSerialPort;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,10 +42,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javax.swing.JOptionPane;
 import model.Dado;
 import model.table.DadoTable;
-import util.PortasDisponiveis;
 import util.UltimosDados;
 
 /**
@@ -58,14 +59,15 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
     private AnchorPane apPrincipal;
     @FXML
     private Pane paneCommand;
+    //BOTÕES
     @FXML
     private Button btnIniciarMonitoramento;
     @FXML
     private Button btnPararMonitoramento;
     @FXML
     private Button btnSalvarDatabase;
-    @FXML
-    private Button btnNaoSalvarDatabase;
+//    @FXML
+//    private Button btnNaoSalvarDatabase;
     @FXML
     private Button btnLuminosidade;
     @FXML
@@ -73,7 +75,10 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
     @FXML
     private Button btnTemperatura;
     @FXML
+    private Button btProcessarAutomatico;
+    @FXML
     private Button btnUmidade;
+    // TOGGLEBUTTON
     @FXML
     private ToggleButton tbAlarmeIncendio;
     @FXML
@@ -90,6 +95,7 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
     private Label lblTemperatura;
     @FXML
     private Label lblUmidade;
+
     //VARIAVEIS DA TABELA
     @FXML
     private TableView<DadoTable> tvUltimosDados;
@@ -111,15 +117,14 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
     private TableColumn tcTemperatura;
     @FXML
     private TableColumn tcUmidade;
+
     @FXML
     private TableColumn<?, ?> tcStatusGeral;
     boolean estaColetandoAmostras;
     TableRow<DadoTable> row = new TableRow<>();
 
     ObservableList<DadoTable> lista = FXCollections.observableArrayList();
-//    UpdateT update;
-//    Thread t;
-//
+    boolean estaProcessandoAutomatico;
     Dado d;
     @FXML
     private LineChart<String, Number> lcGrafico;
@@ -154,17 +159,20 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
 
             XYChart.Series magnetismo = new XYChart.Series();
             magnetismo.setName("Magnetismo");
-
-            dados.stream().forEach((dd) -> {
-                try {
-                    temperatura.getData().add(new XYChart.Data(horaFormatada.format(dd.getDataColeta()), dd.getTemperatura() / 100));
-                    umidade.getData().add(new XYChart.Data(horaFormatada.format(dd.getDataColeta()), dd.getUmidade() / 100));
-                    luminosidade.getData().add(new XYChart.Data(horaFormatada.format(dd.getDataColeta()), dd.getLuminosidade() / 100));
-                    magnetismo.getData().add(new XYChart.Data(horaFormatada.format(dd.getDataColeta()), dd.getMagnetismo() / 100));
-                } catch (Exception e) {
-                    System.err.println(e);
-                }
-            });
+            try {
+                dados.stream().forEach((dd) -> {
+                    try {
+                        temperatura.getData().add(new XYChart.Data(horaFormatada.format(dd.getDataColeta()), dd.getTemperatura() / 100));
+                        umidade.getData().add(new XYChart.Data(horaFormatada.format(dd.getDataColeta()), dd.getUmidade() / 100));
+                        luminosidade.getData().add(new XYChart.Data(horaFormatada.format(dd.getDataColeta()), dd.getLuminosidade() / 100));
+                        magnetismo.getData().add(new XYChart.Data(horaFormatada.format(dd.getDataColeta()), dd.getMagnetismo() / 100));
+                    } catch (Exception e) {
+                        System.err.println(e);
+                    }
+                });
+            } catch (Exception e) {
+                System.out.println(e);
+            }
 
             lcGrafico.getData().addAll(temperatura, umidade, luminosidade, magnetismo);
 
@@ -243,7 +251,7 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
         btnIniciarMonitoramento.setDisable(false);
         btnPararMonitoramento.setDisable(true);
         btnSalvarDatabase.setDisable(true);
-        btnNaoSalvarDatabase.setDisable(true);
+        btProcessarAutomatico.setDisable(true);        
         //DESAHABILITA OS TOGGLEBUTTONS
         tbAlarmeIncendio.setDisable(true);
         tbAlarmeMagnetismo.setDisable(true);
@@ -255,6 +263,7 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
         btnIniciarMonitoramento.setDisable(true);
         btnPararMonitoramento.setDisable(false);
         btnSalvarDatabase.setDisable(false);
+        btProcessarAutomatico.setDisable(false);
         //HABILITA OS TOGGLEBUTTONS
         tbAlarmeIncendio.setDisable(false);
         tbAlarmeMagnetismo.setDisable(false);
@@ -289,9 +298,8 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
     }
 
     private boolean lerPortasArduino() {
-        
-        
-        List<String> choises = PortasDisponiveis.getInstance().getPortas();
+
+        List<String> choises = JavaSerialPort.getInstance().getPortas();
         if (!choises.isEmpty()) {
             ChoiceDialog<String> dialog = new ChoiceDialog<>(choises.get(0), choises);
 
@@ -310,12 +318,12 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
             new Alert(Alert.AlertType.INFORMATION, "Não foi possível detectar uma dispositivo com comunição serial puglado a esse PC!!", ButtonType.OK).show();
             return false;
         }
-          
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Teste();
+
         btnIniciarMonitoramento.setOnAction((ActionEvent event) -> {
             habilitarBotoes();
             lerPortasArduino();
@@ -323,23 +331,52 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
 
         btnPararMonitoramento.setOnAction((ActionEvent event) -> {
             dados.clear();
+            estaColetandoAmostras = false;
+            estaProcessandoAutomatico = false;
             desabilitarBotoes();
             arduino.pararDeReceberDados();
         });
 
         btnSalvarDatabase.setOnAction((ActionEvent event) -> {
-            estaColetandoAmostras = true;  //Flag de verificação se as amostras estãos sendo salvas no banco
-            btnNaoSalvarDatabase.setDisable(false);
-            btnSalvarDatabase.setDisable(true);
-            arduino.salvarDadosNoBanco();
+            //Colocar um validador se realmente deseja para o monitoramento automatico
+
+            if (!estaColetandoAmostras) {
+                if (estaProcessandoAutomatico) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmação de parada de processo!!!!");
+                    alert.setHeaderText("Outro processo está em execução deseja parar?");
+                    alert.setContentText("Realmente deseja parar o processamento\n automático?");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        estaColetandoAmostras = true;
+                        arduino.salvarDadosNoBanco();
+                        btnSalvarDatabase.setText("Coletando dados");
+                        estaProcessandoAutomatico = false;
+                    }
+                } else {
+                    estaColetandoAmostras = true;
+                    arduino.salvarDadosNoBanco();
+                    btnSalvarDatabase.setText("Coletando dados");
+                }
+
+            } else {
+                estaColetandoAmostras = false;
+                arduino.naoSalvarDadosNoBanco();
+                btnSalvarDatabase.setText("Parado");
+            }
+//            estaColetandoAmostras = true;  //Flag de verificação se as amostras estãos sendo salvas no banco
+//            btnNaoSalvarDatabase.setDisable(false);
+//            btnSalvarDatabase.setDisable(true);
+//            arduino.salvarDadosNoBanco();
         });
 
-        btnNaoSalvarDatabase.setOnAction((ActionEvent event) -> {
-            estaColetandoAmostras = false; //Flag de verificação se as amostras estãos sendo salvas no banco
-            btnNaoSalvarDatabase.setDisable(true);
-            btnSalvarDatabase.setDisable(false);
-            arduino.naoSalvarDadosNoBanco();
-        });
+//        btnNaoSalvarDatabase.setOnAction((ActionEvent event) -> {
+//            estaColetandoAmostras = false; //Flag de verificação se as amostras estãos sendo salvas no banco
+//            btnNaoSalvarDatabase.setDisable(true);
+//            btnSalvarDatabase.setDisable(false);
+//            arduino.naoSalvarDadosNoBanco();
+//        });
         /**
          * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          * @ ADICIONA LISTNER PARA OS TOGGLEBUTTONS @
@@ -418,11 +455,47 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
                 arduino.desligarArcondicionado();
             }
         });
+        /**
+         * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+         * @ BOTÃO DE ATIVAÇÃO AUTOMATICO/MANUAL @
+         * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+         */
+        btProcessarAutomatico.setOnAction((ActionEvent event) -> {
+            //VERIFICA SE ESTA SENDO SALVO NO BANCO E CANCELA A OPÇÃO CASO O USUARIO QUEIRA
+            if (!estaProcessandoAutomatico) {
+                if (estaColetandoAmostras) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmação de parada de processo!!!!");
+                    alert.setHeaderText("Outro processo está em execução deseja parar?");
+                    alert.setContentText("Realmente deseja parar o processamento\n automático?");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        estaProcessandoAutomatico = true;
+                        arduino.naoSalvarDadosNoBanco();
+                        btProcessarAutomatico.setText("AUTOMATICO");
+                        estaColetandoAmostras = false;
+                        System.out.println("Processando automaticamente");
+                    }
+                } else {
+                    estaProcessandoAutomatico = true;
+                    btProcessarAutomatico.setText("AUTOMATICO");
+                    System.out.println("Processando automaticamente");
+                }
+
+            } else {
+                estaProcessandoAutomatico = false;
+                btProcessarAutomatico.setText("Parado");
+                System.out.println("Processando automaticamente parado");
+            }
+
+        });
         desabilitarBotoes();//Desabilita todos os botões que não podem ser usados quando não está conectado;
         configuraTabela(); //Configura a tabela de dados     
         setStyle(); // Seta estilos aos botões
         iniciaTela(); // Começa atualizar a tela via thread
         preencherTabela(); // Inicia a thread que vai preencher a tabela
+        piscaLabel();//pisca label
 
     }
 
@@ -596,39 +669,6 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
         System.out.println("Desligando");
     }
 
-//    public void stopUpdate() {
-//        if (t.isAlive()) {
-//            t.interrupt();
-//        }
-//    }
-//    //metodo de atulização
-//    class UpdateT implements Runnable {
-//
-//        @Override
-//        public void run() {
-//            while (true) {
-//                dados = UltimosDados.getInstance().getDados();
-//                System.out.println("Tamanho da lista >> " + dados.size());
-//
-//                if (dados.size() > 1) {
-//                    System.out.println("Tamanho da lista >> " + dados.size());
-//                    String s = String.valueOf(dados.get(0).getLuminosidade());
-//                    lblLuminosidade.setText(s);
-//                }
-//                try {
-//                    Thread.sleep(2000);
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(MonitorArduinoController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//
-//        }
-//
-//    }
-//
-//    public static void atualizarTela() {
-//
-//    }
     @Override
     public void handle(KeyEvent event) {
         System.out.println("HHHHHH");
@@ -637,37 +677,55 @@ public class MonitorArduinoController implements Initializable, EventHandler<Key
         }
     }
 
-    //Teste
-    void Teste() {
+    void piscaLabel() {
         Task t = new Task() {
 
             @Override
             protected Object call() throws Exception {
-
+                boolean statusLabel = false;
                 while (true) {
-                    System.out.println("Testando alteracoes de botão");
-                    Platform.runLater(() -> {
-                        if(tbArcondicionado.isSelected()){
-                            tbArcondicionado.getStyleClass().clear();
-                            tbArcondicionado.getStyleClass().add("tb-unpressed");
-                            tbArcondicionado.setSelected(false);
-                        }else{
-                            tbArcondicionado.getStyleClass().clear();
-                            tbArcondicionado.getStyleClass().add("tb-pressed");
-                            tbArcondicionado.setSelected(true);
-                        }
-                            
-                        
 
-                        
+                    Platform.runLater(() -> {
+                        //EXECUTA OPERAÇÕES CASO O PROCESSAMENTO ESTEJA NO MODO AUTOMATICO
+                        if (estaProcessandoAutomatico) {
+                            if (btProcessarAutomatico.getStyleClass().contains("automatico")) {
+
+                                btProcessarAutomatico.getStyleClass().remove("automatico");
+                                btProcessarAutomatico.getStyleClass().add("manual");
+                            } else {
+                                btProcessarAutomatico.getStyleClass().remove("manual");
+                                btProcessarAutomatico.getStyleClass().add("automatico");
+                            }
+                        } else {
+                            btProcessarAutomatico.getStyleClass().remove("automatico");
+                            btProcessarAutomatico.getStyleClass().remove("manual");
+
+                        }
+                        //EXECUTA OPERAÇOES CASO ESTEJA SENDO FEITO COLETA DE AMOSTRAS
+                        if (estaColetandoAmostras) {
+                            if (btnSalvarDatabase.getStyleClass().contains("automatico")) {
+
+                                btnSalvarDatabase.getStyleClass().remove("automatico");
+                                btnSalvarDatabase.getStyleClass().add("manual");
+                            } else {
+
+                                btnSalvarDatabase.getStyleClass().remove("manual");
+                                btnSalvarDatabase.getStyleClass().add("automatico");
+                            }
+                        } else {
+                            btnSalvarDatabase.getStyleClass().remove("automatico");
+                            btnSalvarDatabase.getStyleClass().remove("manual");
+
+                        }
 
                     });
 
-                    Thread.sleep(3000);
+                    Thread.sleep(500);
                 }
             }
         };
 
         new Thread(t).start();
     }
+
 }

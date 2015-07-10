@@ -5,10 +5,6 @@
  */
 package arduino;
 
-import java.io.IOException;
-import java.util.TooManyListenersException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import util.UltimosDados;
 
@@ -18,7 +14,7 @@ import util.UltimosDados;
  */
 public class Arduino {
 
-    private ControlePorta arduino;
+    private JavaSerialPort javaSerialPort;
 
 //    public Arduino() {
 //        arduino = ControlePorta.getInstance();
@@ -27,14 +23,14 @@ public class Arduino {
 //    }
     
     public Arduino(String porta) {
-        arduino = ControlePorta.getInstance();
-        arduino.setPort(porta, 9600);
+        javaSerialPort = JavaSerialPort.getInstance();
+        javaSerialPort.setPort(porta, 9600);
         //  arduino = new ControlePorta("COM5", 9600);
     }
     
     public Arduino(String porta, int frequencia) {
-        arduino = ControlePorta.getInstance();
-        arduino.setPort(porta, frequencia);
+        javaSerialPort = JavaSerialPort.getInstance();
+        javaSerialPort.setPort(porta, frequencia);
         //  arduino = new ControlePorta("COM5", 9600);
     }
 
@@ -47,20 +43,20 @@ public class Arduino {
     }
 
     public void ligar() {
-        arduino.enviaDados(131);
+        javaSerialPort.enviaDados(131);
     }
 
     public void desligar() {
-        arduino.enviaDados(130);
+        javaSerialPort.enviaDados(130);
     }
 
     public void pararDeEnviarDados() {
-        arduino.closeOut();
+        javaSerialPort.closeOut();
     }
 
     public void pararDeReceberDados() {
         try {
-            arduino.pararLeitura();
+            javaSerialPort.pararLeitura();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -68,39 +64,31 @@ public class Arduino {
     }
 
     public void lerPorta() {
-        try {
-            arduino.iniciarLeitura();
-        } catch (TooManyListenersException | IOException ex) {
-            Logger.getLogger(Arduino.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        javaSerialPort.iniciarLeitura();
     }
 
-    public void escreverNaPorta(byte[] valor) {
-        arduino.enviaDados(valor);
+    public void escreverNaPorta(byte valor) {
+        javaSerialPort.enviaDados(valor);
     }
 
     public void escreverNaPorta(int valor) {
-        arduino.enviaDados(valor);
+        javaSerialPort.enviaDados(valor);
     }
 
     public void comunicacaoArduino(JButton button) {
 
         if ("Ligar".equals(button.getActionCommand())) {
-            arduino.enviaDados(131);
+            javaSerialPort.enviaDados(131);
             System.out.println(button.getText());//Imprime o nome do botão pressionado
         } else if ("Desligar".equals(button.getActionCommand())) {
-            arduino.enviaDados(130);
+            javaSerialPort.enviaDados(130);
             System.out.println(button.getText());//Imprime o nome do botão pressionado
         } else if ("Ler".equals(button.getActionCommand())) {
-            try {
-                arduino.iniciarLeitura();
-            } catch (TooManyListenersException | IOException ex) {
-                Logger.getLogger(Arduino.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            javaSerialPort.iniciarLeitura();
             System.out.println("*********");
             System.out.println(button.getText() + "\n ");//Imprime o nome do botão pressionado
         } else {
-            arduino.closeOut();
+            javaSerialPort.closeOut();
             System.out.println(button.getText());//Imprime o nome do botão pressionado
         }
     }
@@ -129,30 +117,30 @@ public class Arduino {
      */
     
     public void desligarAlarmeMagnetico(){
-        arduino.enviaDados(100);
+        javaSerialPort.enviaDados(100);
     }
     public void ligarAlarmeMagnetico(){
-        arduino.enviaDados(101);
+        javaSerialPort.enviaDados(101);
     }
     
     public void desligarAlarmeIncendio(){
-        arduino.enviaDados(110);
+        javaSerialPort.enviaDados(110);
     }
     public void ligarAlarmeIncendio(){
-        arduino.enviaDados(111);
+        javaSerialPort.enviaDados(111);
     }
     
     public void desligarAquecedor(){
-        arduino.enviaDados(120);
+        javaSerialPort.enviaDados(120);
     }
     public void ligarAquecedor(){
-        arduino.enviaDados(121);
+        javaSerialPort.enviaDados(121);
     }
     
     public void desligarArcondicionado(){
-        arduino.enviaDados(130);
+        javaSerialPort.enviaDados(130);
     }
     public void ligarArcondicionado(){
-        arduino.enviaDados(131);
+        javaSerialPort.enviaDados(131);
     }
 }

@@ -47,6 +47,7 @@
                 </AnchorPane>
               </content>
             </TitledPane>
+            <TextField fx:id="lblTeste" prefWidth="200.0" />
           </children>
         </VBox>
       </center>

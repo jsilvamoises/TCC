@@ -5,6 +5,8 @@
  */
 package repository;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import model.Dado;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -23,6 +25,7 @@ public class Repository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            new Alert(Alert.AlertType.INFORMATION, "Erro:: "+e, ButtonType.OK).showAndWait();
         } finally {
             try {
                 if (session.getTransaction().isActive()) {

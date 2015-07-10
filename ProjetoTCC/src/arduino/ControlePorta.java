@@ -184,7 +184,7 @@ public class ControlePorta implements SerialPortEventListener {
                 break;
             case SerialPortEvent.CTS:
                 break;
-            case SerialPortEvent.DATA_AVAILABLE: {
+            case SerialPortEvent.DATA_AVAILABLE: 
                 String st = "";
                 String linha = "";
                 // Dados d = new Dados();
@@ -205,7 +205,7 @@ public class ControlePorta implements SerialPortEventListener {
                     // Logger.getLogger(GUJSerialPort.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
-            }
+            
             case SerialPortEvent.DSR:
                 break;
             case SerialPortEvent.FE:
