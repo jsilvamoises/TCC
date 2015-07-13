@@ -25,7 +25,7 @@
                 <Insets />
               </VBox.margin>
             </Label>
-            <TableView fx:id="tvUltimosDados" editable="false" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color:white;" tableMenuButtonVisible="true">
+            <TableView fx:id="tvUltimosDados" editable="false" prefHeight="253.0" prefWidth="1351.0" style="-fx-background-color:white;" tableMenuButtonVisible="true">
               <columns>
                 <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="86.0" text="Identificador" fx:id="tcIdentificador" />
                 <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="87.0" text="Temperatura" fx:id="tcTemperatura" />
@@ -42,9 +42,14 @@
                 <Insets left="10.0" right="10.0" top="10.0" />
               </VBox.margin>
             </TableView>
-            <ToolBar style="-fx-background-color:black;&#10;-fx-opacity: 0.7;">
+            <ToolBar prefHeight="57.0" prefWidth="1371.0" style="-fx-background-color:black;&#10;-fx-opacity: 0.7;">
               <items>
-                <Button mnemonicParsing="false" text="Button" />
+                <ProgressBar fx:id="progressMemoria" prefHeight="24.0" prefWidth="214.0" progress="0.0" />
+                <Label fx:id="lblInfoProgressMemoria" prefHeight="24.000099999997474" prefWidth="-1.0" text="Label" textFill="WHITE">
+                  <font>
+                    <Font size="15.0" />
+                  </font>
+                </Label>
               </items>
             </ToolBar>
           </children>
@@ -68,111 +73,114 @@
         </VBox>
       </center>
       <left>
-        <Pane fx:id="paneCommand" prefHeight="467.0" prefWidth="196.0">
+        <VBox fx:id="vBoxLeft" prefHeight="467.0" prefWidth="263.0" style="-fx-background-color:black;&#10;-fx-opacity: 0.7;&#10;&#10;">
           <children>
-            <ToggleButton fx:id="tbAquecedor" alignment="CENTER" contentDisplay="TOP" layoutX="6.0" layoutY="6.0" mnemonicParsing="true" prefHeight="67.94140625" prefWidth="186.0" style="" text="A_quecedor" textFill="WHITE">
-              <font>
-                <Font name="System Bold" size="14.0" fx:id="x5" />
-              </font>
-              <graphic>
-                <ImageView fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+            <GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="false" style="&#10;">
+              <children>
+                <ImageView fx:id="ArCondicionado" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                   <image>
-                    <Image url="@../../../../resources/images/Air%20Conditioner-26.png" />
+                    <Image url="@../../../../resources/images/Air%20Conditioner-32-white.png" />
                   </image>
                 </ImageView>
-              </graphic>
-            </ToggleButton>
-            <ToggleButton fx:id="tbArcondicionado" contentDisplay="TOP" font="$x5" layoutX="6.0" layoutY="82.0" mnemonicParsing="false" prefHeight="67.94140625" prefWidth="186.0" text="Ar condicionado [F2]" textFill="WHITE">
-              <graphic>
-                <ImageView fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="aquecedor" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                   <image>
-                    <Image url="file:/E:/TCCFX/JavaFX/src/resources/images/Air%20Conditioner-26.png" />
+                    <Image url="@../../../../resources/images/Heating%20Automation-32%20-white.png" />
                   </image>
                 </ImageView>
-              </graphic>
-            </ToggleButton>
-            <ToggleButton fx:id="tbAlarmeIncendio" contentDisplay="TOP" font="$x5" graphicTextGap="5.0" layoutX="6.0" layoutY="158.0" mnemonicParsing="false" prefHeight="68.94140625" prefWidth="186.0" text="Alarme Incendio [F3]" textFill="WHITE">
-              <graphic>
-                <ImageView fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="magnetismo" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                   <image>
-                    <Image url="file:/E:/TCCFX/JavaFX/src/resources/images/Air%20Conditioner-26.png" />
+                    <Image url="@../../../../resources/images/magnet-32%20-white.png" />
                   </image>
                 </ImageView>
-              </graphic>
-            </ToggleButton>
-            <ToggleButton fx:id="tbAlarmeMagnetismo" contentDisplay="TOP" font="$x5" layoutX="6.0" layoutY="236.0" mnemonicParsing="false" prefHeight="67.94140625" prefWidth="186.0" text="Alar. Magnetismo [F4]" textFill="WHITE">
-              <graphic>
-                <ImageView fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="fire" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                   <image>
-                    <Image url="file:/E:/TCCFX/JavaFX/src/resources/images/Air%20Conditioner-26.png" />
+                    <Image url="@../../../../resources/images/fire-extinguisher-32-white.png" />
                   </image>
                 </ImageView>
-              </graphic>
-            </ToggleButton>
-            <Label fx:id="lblInfo" alignment="CENTER" font="$x6" layoutX="8.0" layoutY="310.0" prefWidth="180.0" style="-fx-background-color:black;&#10;-fx-opacity:0.7;" text="MANUAL" textFill="WHITE" />
+              </children>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="50.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="141.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="62.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+              <VBox.margin>
+                <Insets left="5.0" right="5.0" top="10.0" />
+              </VBox.margin>
+            </GridPane>
           </children>
-        </Pane>
+          <BorderPane.margin>
+            <Insets bottom="50.0" left="10.0" top="10.0" />
+          </BorderPane.margin>
+        </VBox>
       </left>
       <right>
-        <VBox prefHeight="588.0" prefWidth="330.0">
+        <VBox fx:id="vBoxInfo" prefHeight="588.0" prefWidth="250.0" style="-fx-background-color:black;&#10;-fx-opacity: 0.7;">
           <children>
-            <Button fx:id="btnTemperatura" contentDisplay="LEFT" maxHeight="68.0" minHeight="67.94140625" minWidth="68.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="311.0" style="-fx-background-color:lightseagreen;" text="Temperatura" textAlignment="CENTER" textFill="WHITE" textOverrun="ELLIPSIS">
-              <font>
-                <Font name="System Bold" size="20.0" fx:id="x1" />
-              </font>
-              <graphic>
-                <ImageView fitHeight="62.0" fitWidth="62.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image url="@../../../../resources/images/temperatura32.png" />
-                  </image>
-                </ImageView>
-              </graphic>
-            </Button>
-            <Label id="lblUmidade" fx:id="lblTemperatura" alignment="CENTER" contentDisplay="CENTER" minHeight="52.0" prefHeight="59.0" prefWidth="311.0001220703125" style="-fx-background-color:black;&#10;" text="0.000" textAlignment="CENTER" textFill="WHITE">
-              <font>
-                <Font name="Arial Black" size="40.0" fx:id="x2" />
-              </font>
-            </Label>
-            <Button id="btn" fx:id="btnUmidade" contentDisplay="LEFT" font="$x1" maxHeight="68.0" minHeight="52.0" minWidth="68.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="311.0" style="-fx-background-color:lightseagreen;" text="Umidade" textAlignment="CENTER" textFill="WHITE" textOverrun="ELLIPSIS">
-              <graphic>
-                <ImageView fitHeight="62.0" fitWidth="62.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image url="@../../../../resources/images/Humidity-32.png" />
-                  </image>
-                </ImageView>
-              </graphic>
-            </Button>
-            <Label fx:id="lblUmidade" alignment="CENTER" contentDisplay="CENTER" font="$x2" minHeight="33.0" prefHeight="59.0" prefWidth="310.9999000000025" style="-fx-background-color:black;" text="0.000" textAlignment="CENTER" textFill="WHITE" />
-            <Button fx:id="btnLuminosidade" contentDisplay="LEFT" font="$x1" minHeight="64.0" minWidth="124.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="311.0" style="-fx-background-color:lightseagreen;" text="Luminosidade" textAlignment="CENTER" textFill="WHITE" textOverrun="ELLIPSIS">
-              <graphic>
-                <ImageView fitHeight="62.0" fitWidth="62.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image url="@../../../../resources/images/Bright%20Moon%20Filled-32.png" />
-                  </image>
-                </ImageView>
-              </graphic>
-            </Button>
-            <Label fx:id="lblLuminosidade" alignment="CENTER" contentDisplay="CENTER" font="$x2" minHeight="51.999900000002526" prefHeight="59.0" prefWidth="310.9999000000025" style="-fx-background-color:black;" text="0.000" textAlignment="CENTER" textFill="WHITE" />
-            <Button fx:id="btnMagnetismo" contentDisplay="LEFT" font="$x1" minHeight="50.0" minWidth="124.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="311.0" style="-fx-background-color:lightseagreen;" text="Magnetismo" textAlignment="CENTER" textFill="WHITE" textOverrun="ELLIPSIS">
-              <graphic>
-                <ImageView fitHeight="62.0" fitWidth="62.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image url="@../../../../resources/images/Protect%20From%20Magnetic%20Field-32.png" />
-                  </image>
-                </ImageView>
-              </graphic>
-            </Button>
-            <Label fx:id="lblMagnetismo" alignment="CENTER" contentDisplay="CENTER" font="$x2" prefHeight="59.0" prefWidth="310.9999000000025" style="-fx-background-color:black;" text="0.000" textAlignment="CENTER" textFill="WHITE" />
+            <Pane fx:id="paneCommand" prefHeight="352.0" prefWidth="214.0" style="-fx-background-color:black;&#10;-fx-opacity: 0.7;&#10;" visible="false">
+              <children>
+                <Button fx:id="btnAquecedor" contentDisplay="TOP" layoutX="13.0" layoutY="9.0" maxHeight="68.0" maxWidth="-1.0" minHeight="68.0" minWidth="186.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="201.0" style="" text="AQUECEDOR OFF">
+                  <font>
+                    <Font name="Aharoni Bold" size="14.0" fx:id="x5" />
+                  </font>
+                  <graphic>
+                    <ImageView fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../../../../resources/images/Air%20Conditioner-26.png" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                  <textFill>
+                    <Color blue="0.600" green="0.528" red="0.000" fx:id="x7" />
+                  </textFill>
+                </Button>
+                <Button fx:id="btnArcondicionado" contentDisplay="TOP" font="$x5" layoutX="13.0" layoutY="84.0" minHeight="68.0" minWidth="186.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="201.0" text="AR COND OFF" textFill="$x7">
+                  <graphic>
+                    <ImageView fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../../../../resources/images/Air%20Conditioner-26.png" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </Button>
+                <Button fx:id="btnAlarmeMagnetismo" contentDisplay="TOP" font="$x5" layoutX="14.0" layoutY="160.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="201.0" text="ALARM. MAG OFF" textFill="$x7">
+                  <graphic>
+                    <ImageView fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../../../../resources/images/Siren-32.png" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </Button>
+                <Button id="btnAlarmeMagnetismo" fx:id="btnAlarmeIncendio" contentDisplay="TOP" font="$x5" layoutX="14.0" layoutY="235.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="201.0" text="ALARM.INCEND. OFF" textFill="#008799">
+                  <graphic>
+                    <ImageView fitHeight="32.0" fitWidth="32.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../../../../resources/images/Siren-32.png" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </Button>
+              </children>
+            </Pane>
           </children>
           <padding>
-            <Insets left="5.0" right="10.0" top="5.0" />
+            <Insets left="5.0" right="5.0" />
           </padding>
+          <BorderPane.margin>
+            <Insets bottom="50.0" left="10.0" right="10.0" top="10.0" />
+          </BorderPane.margin>
         </VBox>
       </right>
       <top>
         <ToolBar fx:id="tbCabecalho" prefHeight="83.0" prefWidth="1040.0" style="-fx-background-color:black;&#10;-fx-opacity: 0.7;">
           <items>
-            <Button fx:id="btnIniciarMonitoramento" contentDisplay="TOP" mnemonicParsing="true" style="-fx-background-color:white;" text="_Iniciar Monitoramento" textOverrun="LEADING_ELLIPSIS" underline="false">
+            <Button id="btnIniciarMonitoramento" fx:id="btnIniciarLeituraDePorta" contentDisplay="TOP" mnemonicParsing="true" style="-fx-background-color:white;&#10;" text="_Iniciar Monitoramento" textOverrun="LEADING_ELLIPSIS" underline="false">
               <font>
                 <Font name="System Bold" size="15.0" fx:id="x3" />
               </font>
@@ -187,7 +195,7 @@
                 <Color blue="0.600" green="0.529" red="0.000" fx:id="x4" />
               </textFill>
             </Button>
-            <Button id="btnIniciarMonitoramento" fx:id="btnPararMonitoramento" contentDisplay="TOP" font="$x3" mnemonicParsing="false" style="-fx-background-color:white;" text="Parar Monitoramento" textFill="$x4" textOverrun="LEADING_ELLIPSIS" underline="false">
+            <Button id="btnIniciarMonitoramento" fx:id="btnPararLeituraDePorta" contentDisplay="TOP" font="$x3" mnemonicParsing="false" style="-fx-background-color:white;" text="Parar Monitoramento" textFill="$x4" textOverrun="LEADING_ELLIPSIS" underline="false">
               <graphic>
                 <ImageView fitHeight="33.0" fitWidth="33.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -205,7 +213,7 @@
                 </ImageView>
               </graphic>
             </Button>
-            <Button id="btnIniciarMonitoramento" fx:id="btProcessarAutomatico" contentDisplay="TOP" font="$x3" maxWidth="169.0" minWidth="169.0" mnemonicParsing="false" style="-fx-background-color:white;" text="MANUAL" textFill="$x4" textOverrun="LEADING_ELLIPSIS" underline="false">
+            <Button id="btnIniciarMonitoramento" fx:id="btnProcessarAutomatico" contentDisplay="TOP" font="$x3" maxWidth="169.0" minWidth="169.0" mnemonicParsing="false" style="-fx-background-color:white;" text="MANUAL" textFill="$x4" textOverrun="LEADING_ELLIPSIS" underline="false">
               <graphic>
                 <ImageView fitHeight="33.0" fitWidth="33.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                   <image>

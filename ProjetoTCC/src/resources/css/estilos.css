@@ -1,13 +1,11 @@
-.tb-pressed{-fx-background-color: firebrick;}
-.tb-unpressed{-fx-background-color: lightseagreen;}
+.on{-fx-background-color: firebrick!important;}
+.off{-fx-background-color: lightseagreen!important;}
 .custom-btn{}
 .label-info{-fx-background-color: black;}
+.label-controles{-fx-font-size:bold}
 .mainFxmlClass {-fx-background-color: lightseagreen;}
 #menuBar{width: 100%;}
-#AnchorPane{
-   // height: 100%;
-  //  width: 100%;
-}
+#paneCommand{-fx-background-color: black!important; -fx-opacity: 0.7!important}
 .automatico{
     -fx-background-color: darkgreen!important;
 }

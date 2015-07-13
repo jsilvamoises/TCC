@@ -17,26 +17,14 @@ import javafx.stage.Stage;
  *
  * @author MOISES
  */
-public class NewFXMain extends Application {
+public class Menu extends Application {
     
     @Override
     public void start(Stage primaryStage) {
         
         
-        
-        
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
         StackPane root = new StackPane();
-        root.getChildren().add(btn);
+       // root.getChildren().add(btn);
         
         Scene scene = new Scene(root, 300, 250);
         

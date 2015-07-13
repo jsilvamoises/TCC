@@ -14,40 +14,71 @@ import util.UltimosDados;
  */
 public class Arduino {
 
-    private JavaSerialPort javaSerialPort;
+    public static int DIG_PORTA_01_OFF = 10;
+    public static int DIG_PORTA_01_ON = 11;
+    public static int DIG_PORTA_02_OFF = 20;
+    public static int DIG_PORTA_02_ON = 21;
+    public static int DIG_PORTA_03_OFF = 30;
+    public static int DIG_PORTA_03_ON = 31;
+    public static int DIG_PORTA_04_OFF = 40;
+    public static int DIG_PORTA_04_ON = 41;
+    public static int DIG_PORTA_05_OFF = 50;
+    public static int DIG_PORTA_05_ON = 51;
+    public static int DIG_PORTA_06_OFF = 60;
+    public static int DIG_PORTA_06_ON = 61;
+    public static int DIG_PORTA_07_OFF = 70;
+    public static int DIG_PORTA_07_ON = 71;
+    public static int DIG_PORTA_08_OFF = 80;
+    public static int DIG_PORTA_08_ON = 81;
+    public static int DIG_PORTA_09_OFF = 90;
+    public static int DIG_PORTA_09_ON = 91;
+    public static int DIG_PORTA_10_OFF = 100;
+    public static int DIG_PORTA_10_ON = 101;
+    public static int DIG_PORTA_11_OFF = 110;
+    public static int DIG_PORTA_11_ON = 111;
+    public static int DIG_PORTA_12_OFF = 120;
+    public static int DIG_PORTA_12_ON = 121;
+    public static int DIG_PORTA_13_OFF = 130;
+    public static int DIG_PORTA_13_ON = 131;
 
-//    public Arduino() {
-//        arduino = ControlePorta.getInstance();
-//        arduino.setPort("COM5", 9600);
-//        //  arduino = new ControlePorta("COM5", 9600);
-//    }
-    
+    private JavaSerialPort javaSerialPort;
+    /*
+     ############################################################################
+     #             METODO CONSTRUTOR QUE RECEBER UMA PORTA POR PARAM            #
+     ############################################################################
+     */
+
     public Arduino(String porta) {
         javaSerialPort = JavaSerialPort.getInstance();
         javaSerialPort.setPort(porta, 9600);
-        //  arduino = new ControlePorta("COM5", 9600);
     }
-    
+    /*
+     ############################################################################
+     #             METODO CONSTRUTOR QUE RECEBER UMA PORTA / FREQUENCIA         #
+     ############################################################################
+     */
+
     public Arduino(String porta, int frequencia) {
         javaSerialPort = JavaSerialPort.getInstance();
         javaSerialPort.setPort(porta, frequencia);
-        //  arduino = new ControlePorta("COM5", 9600);
     }
+    /*
+     ############################################################################
+     #             INDICA QUE OS VALORES COLETADOS É PARA SER PERSISTIDO        #
+     ############################################################################
+     */
 
     public void salvarDadosNoBanco() {
         UltimosDados.getInstance().setIsSavingInDatabase(true);
     }
+    /*
+     ############################################################################
+     #         INDICA QUE OS VALORES COLETADOS NÃO É PARA SER PERSISTIDO        #
+     ############################################################################
+     */
 
     public void naoSalvarDadosNoBanco() {
         UltimosDados.getInstance().setIsSavingInDatabase(false);
-    }
-
-    public void ligar() {
-        javaSerialPort.enviaDados(131);
-    }
-
-    public void desligar() {
-        javaSerialPort.enviaDados(130);
     }
 
     public void pararDeEnviarDados() {
@@ -60,7 +91,7 @@ public class Arduino {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
     }
 
     public void lerPorta() {
@@ -93,54 +124,52 @@ public class Arduino {
         }
     }
 
-    /*
-     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-     @                    LIGA E DESLIGA PINO DO ARDUINO                      @
-     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-     @                                                                        @
-     @ ALARME DE MAGNETISMO                                                   @
-     @ 100 - DESLIGA                                                          @
-     @ 101 - LIGA                                                             @
-     @========================================================================@
-     @ ALARME DE INCENDIO                                                     @
-     @ 110 - DESLIGA                                                          @
-     @ 111 - LIGA                                                             @
-     @========================================================================@
-     @ AQUECEDOR                                                              @
-     @ 120 - DESLIGA                                                          @
-     @ 121 - LIGA                                                             @
-     @========================================================================@
-     @ ARCONDICIONADO                                                         @
-     @ 130 - DESLIGA                                                          @
-     @ 131 - LIGA                                                             @
-     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-     */
     
-    public void desligarAlarmeMagnetico(){
+    public void write(int porta) {
+        try {
+            javaSerialPort.enviaDados(porta);
+        } catch (Exception e) {
+             throw new IllegalArgumentException("O valor passada não é válido!!!!", e);
+        }
+    }
+
+    @Deprecated
+    public void desligarAlarmeMagnetico() {
         javaSerialPort.enviaDados(100);
     }
-    public void ligarAlarmeMagnetico(){
+
+    @Deprecated
+    public void ligarAlarmeMagnetico() {
         javaSerialPort.enviaDados(101);
     }
-    
-    public void desligarAlarmeIncendio(){
+
+    @Deprecated
+    public void desligarAlarmeIncendio() {
         javaSerialPort.enviaDados(110);
     }
-    public void ligarAlarmeIncendio(){
+
+    @Deprecated
+    public void ligarAlarmeIncendio() {
         javaSerialPort.enviaDados(111);
     }
-    
-    public void desligarAquecedor(){
+
+    @Deprecated
+    public void desligarAquecedor() {
         javaSerialPort.enviaDados(120);
     }
-    public void ligarAquecedor(){
+
+    @Deprecated
+    public void ligarAquecedor() {
         javaSerialPort.enviaDados(121);
     }
-    
-    public void desligarArcondicionado(){
+
+    @Deprecated
+    public void desligarArcondicionado() {
         javaSerialPort.enviaDados(130);
     }
-    public void ligarArcondicionado(){
+
+    @Deprecated
+    public void ligarArcondicionado() {
         javaSerialPort.enviaDados(131);
     }
 }

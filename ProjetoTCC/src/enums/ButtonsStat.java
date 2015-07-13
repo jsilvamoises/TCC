@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package arduino;
+package enums;
 
 /**
  *
  * @author MOISES
  */
-public class NewMain {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        System.out.println(Arduino.DIG_PORTA_02_ON);
-    }
-    
+public enum ButtonsStat {
+    ON, OFF
 }

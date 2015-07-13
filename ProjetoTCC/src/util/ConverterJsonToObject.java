@@ -26,11 +26,7 @@ public class ConverterJsonToObject {
     public static ConverterJsonToObject getInstance() {
         return instance == null ? instance = new ConverterJsonToObject() : instance;
     }
-    /**
-     * Converte uma string json em um objeto Java
-     * @param valor
-     * @return 
-     */
+    
     public Dado transformToObject(String valor) {
         Dado d = null;
         System.out.println(">>>Convertendo ojeto json para ojeto Java");

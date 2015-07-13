@@ -5,7 +5,6 @@
  */
 package arduino;
 
-import java.io.IOException;
 import java.io.InputStream;
 import util.*;
 import java.io.OutputStream;
@@ -13,14 +12,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
-import jssc.SerialPortException;
 import jssc.SerialPortList;
 
 /**
@@ -65,23 +61,26 @@ public class JavaSerialPort implements SerialPortEventListener {
      * INICIA UM CONEXÃO COM A PORTA
      */
     private void initialize() {
-        try {
-            port = new SerialPort(portaCom);
-            port.openPort();
-            port.setParams(
-                    this.taxa,
-                    SerialPort.DATABITS_8,
-                    SerialPort.STOPBITS_1,
-                    SerialPort.PARITY_NONE);
-            int mask = SerialPort.MASK_RXCHAR + SerialPort.MASK_CTS + SerialPort.MASK_DSR + SerialPort.MASK_BREAK;//Prepare mask
-            port.setEventsMask(mask);
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Porta com não encontrada!!!!");
-            alert.setHeaderText("A porta " + portaCom + " não foi encontrada");
-            alert.setContentText("Verifique se o dispositivo está conectado." + e);
-            alert.showAndWait();
-        }
+       
+
+            try {
+                port = new SerialPort(portaCom);
+                port.openPort();
+                port.setParams(
+                        this.taxa,
+                        SerialPort.DATABITS_8,
+                        SerialPort.STOPBITS_1,
+                        SerialPort.PARITY_NONE);
+                int mask = SerialPort.MASK_RXCHAR + SerialPort.MASK_CTS + SerialPort.MASK_DSR + SerialPort.MASK_BREAK;//Prepare mask
+                port.setEventsMask(mask);
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Porta com não encontrada!!!!");
+                alert.setHeaderText("A porta " + portaCom + " não foi encontrada");
+                alert.setContentText("Verifique se o dispositivo está conectado." + e);
+                alert.showAndWait();
+            }
+        
     }
 
     /**
@@ -174,14 +173,14 @@ public class JavaSerialPort implements SerialPortEventListener {
                 break;
             case SerialPortEvent.DSR:
                 break;
-            case SerialPortEvent.RXCHAR:  {
+            case SerialPortEvent.RXCHAR: {
                 try {
-                    linha+= new String(port.readBytes());
+                    linha += new String(port.readBytes());
                 } catch (Exception e) {
                 }
-                if(linha.contains("*")){
-                   // System.out.println("Acabour");
-                    linha = linha.replace("*", "");                    
+                if (linha.contains("*")) {
+                    // System.out.println("Acabour");
+                    linha = linha.replace("*", "");
                     //System.out.println(">>>  Últimos dados coletados :: " + linha);
                     ConverterJsonToObject.getInstance().transformToObject(linha);
                     linha = "";
@@ -199,7 +198,7 @@ public class JavaSerialPort implements SerialPortEventListener {
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
-                //System.out.println(">>>  Últimos dados coletados :: " + linha);
+            //System.out.println(">>>  Últimos dados coletados :: " + linha);
             //ConverterJsonToObject.getInstance().transformToObject(linha);
                 /*
                 

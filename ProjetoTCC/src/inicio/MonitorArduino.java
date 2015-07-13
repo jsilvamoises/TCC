@@ -5,6 +5,7 @@
  */
 package inicio;
 
+import eu.hansolo.enzo.lcd.Lcd;
 import java.awt.Dimension;
 import static java.awt.Toolkit.getDefaultToolkit;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.URLView;
 
@@ -23,9 +25,10 @@ import util.URLView;
  * @author MOISES
  */
 public class MonitorArduino extends Application {
-    
+    private Lcd                 control;
     @Override
     public void start(Stage stage) {
+        
         Parent   root = null;
         String css = getClass().getResource("/resources/css/estilos.css").toExternalForm();
         URL a = URLView.getInstance().getUrl("MonitorArduino");
@@ -36,6 +39,8 @@ public class MonitorArduino extends Application {
         } catch (IOException ex) {
             Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
         
         Dimension d = getDefaultToolkit().getScreenSize();
          
