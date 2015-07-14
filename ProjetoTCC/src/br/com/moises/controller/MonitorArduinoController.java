@@ -46,6 +46,8 @@ import javafx.scene.layout.VBox;
 import componentes.lcd.LCD;
 import eu.hansolo.enzo.experimental.tbutton.TButton;
 import eu.hansolo.enzo.lcd.LcdClock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ToolBar;
 import javafx.scene.effect.Reflection;
 import javafx.scene.layout.GridPane;
@@ -197,30 +199,38 @@ public class MonitorArduinoController implements Initializable {
         //ALARME MAGNETISMO
         tbAlarmMagnetismo.setOnDeselect((TButton.SelectEvent event) -> {
             desativarAlarmeMagnetismo();
+            salvarInformacaoDeComandos();
         });
         tbAlarmMagnetismo.setOnSelect((TButton.SelectEvent event) -> {
             ativarAlarmeMagnetismo();
+            salvarInformacaoDeComandos();
         });
         //ALARME INCENDIO
         tbAlarmeIncendio.setOnDeselect((TButton.SelectEvent event) -> {
             desativarAlarmeIncendio();
+            salvarInformacaoDeComandos();
         });
         tbAlarmeIncendio.setOnSelect((TButton.SelectEvent event) -> {
             ativarAlarmeIncencio();
+            salvarInformacaoDeComandos();
         });
         //AR CONDICIONADO
         tbArcondicionado.setOnSelect((TButton.SelectEvent event) -> {
             ativarArCondicionado();
+            salvarInformacaoDeComandos();
         });
         tbArcondicionado.setOnDeselect((TButton.SelectEvent event) -> {
             desativarArCondicionado();
+            salvarInformacaoDeComandos();
         });
         //AQUECEDOR
         tbAquecedor.setOnDeselect((TButton.SelectEvent event) -> {
             desativarAquecedor();
+            salvarInformacaoDeComandos();
         });
         tbAquecedor.setOnSelect((TButton.SelectEvent event) -> {
             ativarAquecedor();
+            salvarInformacaoDeComandos();
         });
         //TEXTO DE INDICAÇÃO
         //======================================================================
@@ -806,6 +816,8 @@ public class MonitorArduinoController implements Initializable {
         //porta 13
         arduino.write(Arduino.DIG_PORTA_13_ON);
         estaOnArCondicionado = true;
+        tbAquecedor.setSelected(false);
+        desativarAquecedor();
         setStatBtnArCondicionado(ButtonsStat.ON);
     }
     /*
@@ -829,6 +841,8 @@ public class MonitorArduinoController implements Initializable {
         //porta 12       
         arduino.write(Arduino.DIG_PORTA_12_ON);
         estaOnAquecedor = true;
+        tbArcondicionado.setSelected(false);
+        desativarArCondicionado();
         setStatBtnAquecedor(ButtonsStat.ON);
     }
     /*
@@ -965,6 +979,26 @@ public class MonitorArduinoController implements Initializable {
         lcdUmidade.setValue(d.getUmidade());
         lcdMagnetismo.setValue(d.getMagnetismo());
         lcdLuminosidade.setValue(d.getLuminosidade());
+    }
+    private void  salvarInformacaoDeComandos(){
+        SaveThread st = new SaveThread();
+        new Thread(st).start();
+    }
+    
+    private class SaveThread implements Runnable{
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(5000);
+                dados = UltimosDados.getInstance().getDados();
+                d = dados.get(0);
+                new repository.Repository().salvar(d);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MonitorArduinoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
     }
 
 }

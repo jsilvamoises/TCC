@@ -1,7 +1,14 @@
-#define ALARME_MAGNETISMO 10   // define que o alarme de magnetismo sera ativado/desativado pela porta 10
-#define ALARME_INCENCIO   11   // define que o alarme de incendio será ativado/desativado pela porta 11
-#define AQUECED0R         12   // Define que o aquecedor será ativado/desativado pela porta 12
-#define AR_CONDICIONADO   13   // Define que o ar condicionado será ativado/desativado pela porta 13
+#include <dht11.h>
+//#########################################################################################################
+dht11 sensorUmidadeTemperatura;
+//#########################################################################################################
+#define ALARME_MAGNETISMO       10   // define que o alarme de magnetismo sera ativado/desativado pela porta 10
+#define ALARME_INCENCIO         11   // define que o alarme de incendio será ativado/desativado pela porta 11
+#define AQUECED0R               12   // Define que o aquecedor será ativado/desativado pela porta 12
+#define AR_CONDICIONADO         13   // Define que o ar condicionado será ativado/desativado pela porta 13
+#define PIN_SENSOR_UMID_TEMP     2   // Define que o sensor de temperatura estar enviando dados atravéz da porta 2
+#define PIN_SENSOR_LUMINOSIDADE A0   // Define que o sensor de luminosidade estará conectado ao pino A0
+//##########################################################################################################
 
 
 
@@ -22,32 +29,32 @@ void setup() {
 }
 
 void loop() {
-    lerComandosRecebidos();
+  lerComandosRecebidos();
 
   //GERA UMA STRING NO FORMATO JSON
   // if ((millis() % 1000) == 0) {
   if ((millis() - valorUltimaEscritaNaPorta) >= intervaloEscritaNaPorta) {
-    
-   
-   /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-      @     LÊ OS DADOS VINDOS DOS PINOS                @
-    /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+
+    /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+       @     LÊ OS DADOS VINDOS DOS PINOS                @
+     /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
     // Imprime dados da temperatura
     Serial.print("{temperatura: ");
-    Serial.print(random(10, 50));
-    Serial.print(", ");     
+    Serial.print(temperatura());
+    Serial.print(", ");
     // imprime dados da umidade
     Serial.print("umidade: ");
-    Serial.print(random(60, 100));
-    Serial.print(", ");    
+    Serial.print(umidade());
+    Serial.print(", ");
     // imprime dados da luminosidade
     Serial.print("luminosidade: ");
-    Serial.print(random(0, 100));
-    Serial.print(", ");     
+    Serial.print(luminosidade());
+    Serial.print(", ");
     // imprime dados do magnetismo
     Serial.print("magnetismo: ");
     Serial.print(random(0, 100));
-    Serial.print(", ");     
+    Serial.print(", ");
     // imprime dados do id dos dispositivo
     Serial.print("identificador: ");
     Serial.print("AMB-01");
@@ -77,11 +84,11 @@ void loop() {
     Serial.print(", ");
     // imprime o status geral, caso haja algum esquipamento de saida liga imprime 1 caso todos estejam desligado 0
     Serial.print("statusGeral: ");
-    Serial.print(statusGeral(a,b,c,d));
-   // Serial.print(", ");
+    Serial.print(statusGeral(a, b, c, d));
+    // Serial.print(", ");
     Serial.println("} ");
     Serial.println("*");
-    valorUltimaEscritaNaPorta = millis();    
+    valorUltimaEscritaNaPorta = millis();
     Serial.flush();
   }
 
@@ -92,10 +99,10 @@ void loop() {
 }
 
 
-byte statusGeral(byte a, byte b, byte c, byte d){
-  if(a==1 || b==1 || c==1 || d==1){
+byte statusGeral(byte a, byte b, byte c, byte d) {
+  if (a == 1 || b == 1 || c == 1 || d == 1) {
     return 1;
-  }else{
+  } else {
     return 0;
   }
 }
@@ -142,4 +149,50 @@ void lerComandosRecebidos() {
   }
 
 }
+/*#################################################################################################
+ *###################### VERIFICA SE O SENSOR ESTÁ RESPONDENDO ####################################
+ *###############################################################################################*/
+boolean verificarStatusSensor() {
+  int resposta = sensorUmidadeTemperatura.read(PIN_SENSOR_UMID_TEMP);
+  switch (resposta) {
+    case DHTLIB_OK:
+     // Serial.println("OK");
+      return true;
+    case DHTLIB_ERROR_CHECKSUM:
+      //Serial.println("Erro no checksum");
+      return false;
+    case DHTLIB_ERROR_TIMEOUT:
+     // Serial.println("Tempo esgotado");
+     return false;
+    default:
+    //  Serial.println("Erro desconhecido");
+      return false;
+  }
+}
+/*#################################################################################################
+ *###################### RETORNA UMIDADE CASO O SENSOR ESTEJA ATIVO ###############################
+ *###############################################################################################*/
+float umidade() {
+     if(verificarStatusSensor()){
+      return sensorUmidadeTemperatura.humidity;
+     }else{
+      return 0.00;
+     }
+}
+/*#################################################################################################
+ *###################### RETORNA A TEMPERATURA CASO O SENSOR ESTEJA ATIVO #########################
+ *###############################################################################################*/
+float temperatura() {
+     if(verificarStatusSensor()){
+      return sensorUmidadeTemperatura.temperature;
+     }else{
+      return 0.00;
+     }
+}
+/*#################################################################################################
+ *###################### RETORNA O VALOR LIDO DA PORTA A0 #########################################
+ *###############################################################################################*/
+ float luminosidade(){
+  return (float) analogRead(PIN_SENSOR_LUMINOSIDADE)/10;
+ }
 
